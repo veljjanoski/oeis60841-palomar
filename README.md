@@ -11,7 +11,7 @@ A060841 lists the numerators of $1/\det(M)$, and R. G. Wilson v conjectured in 2
 $1/\det(M)$ is an integer only for $n = 1, \ldots, 34$, $36$ and $38$.
 
 - `OeisA60841.conjecture1`: for every $n \geq 1$, the denominator of $1/\det(M)$ is $1$ if and
-  only if $n \in \{1, \ldots, 34\} \cup \{36, 38\}$.
+  only if $n \in \lbrace 1, \ldots, 34 \rbrace \cup \lbrace 36, 38 \rbrace$.
 
 The definitions `lcmMatrix` and `integerDetN` and the statement in `Challenge.lean` are copied
 verbatim from [formal-conjectures](https://github.com/google-deepmind/formal-conjectures)
@@ -22,7 +22,7 @@ The proof in `Solution.lean`: since $1/\mathrm{lcm}(i,j) = \gcd(i,j)/(ij)$ and
 $\sum_{d \mid m} \varphi(d) = m$, the gcd matrix factors as
 $E \cdot \mathrm{diag}(\varphi) \cdot E^{\mathsf T}$ with $E$ the unitriangular
 divisibility matrix $E_{id} = [d \mid i]$ (Smith's determinant), so
-$1/\det(M) = (n!)^2 / \prod_{k \leq n} \varphi(k)$. For $n \in \{1, \ldots, 34, 36, 38\}$ the
+$1/\det(M) = (n!)^2 / \prod_{k \leq n} \varphi(k)$. For $n \in \lbrace 1, \ldots, 34, 36, 38 \rbrace$ the
 divisibility is decided by computation (`decide`). For every other $n$ the obstruction is
 $2$-adic: the odd primes up to $97$ and the powers of $2$ from $4$ to $128$ give
 $v_2\big(\prod_{k \leq n} \varphi(k)\big) \geq c(n)$
