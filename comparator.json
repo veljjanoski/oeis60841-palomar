@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "OeisA60841.conjecture1"
+  ],
+  "definition_names": [
+    "OeisA60841.lcmMatrix",
+    "OeisA60841.integerDetN"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

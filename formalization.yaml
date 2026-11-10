@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "OEIS A060841: 1/det(1/lcm(i,j)) is an integer exactly for n <= 34, n = 36 and n = 38"
+  description: >-
+    Let M be the n x n matrix with entries 1/lcm(i,j). R. G. Wilson v conjectured (OEIS A060841,
+    2015) that 1/det(M) is an integer only for n = 1, ..., 34, 36 and 38. This project proves the
+    conjecture as stated in formal-conjectures (OeisA60841.conjecture1): by Smith's determinant
+    the gcd matrix factors as E diag(phi) E^T with E the unitriangular divisibility matrix, so
+    1/det(M) = (n!)^2 / prod_{k <= n} phi(k); for n in {1, ..., 34, 36, 38} the divisibility is
+    decided by computation, and for every other n the odd primes up to 97 and the powers of 2
+    from 4 to 128 force v_2(prod phi(k)) > v_2((n!)^2), numerically for n = 35, 37 and
+    39 <= n < 100 and by a linear bound for n >= 100.
+  authors:
+    - "Daniel Veljjanoski"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Daniel Veljjanoski"
+
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11C20", "11A25", "15A15"]
+
+sources:
+  - title: "A060841: Numerator of 1/det(M) where M is the n X n matrix with M[i,j] = 1/lcm(i,j)"
+    type: "web page"
+    location: "https://oeis.org/A060841"
+    relationship: "formalizes"
+    note: >-
+      The conjecture is the comment of Robert G. Wilson v, Aug 02 2015: "1/det(M) is an integer
+      only for n: 1 to 34, 36 and 38." The entry has no proof.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "On the value of a certain arithmetical determinant"
+    authors:
+      - "Henry John Stephen Smith"
+    type: "article"
+    location: "Proc. London Math. Soc. 7 (1875/76), 208-212"
+    relationship: "adapts"
+    note: >-
+      Smith's determinant: det(gcd(i,j))_{i,j <= n} = prod_{k <= n} phi(k). The Lean proof uses
+      the standard factorisation gcd(i,j) = sum_{d | i, d | j} phi(d), that is
+      E diag(phi) E^T with E the divisibility matrix, which gives the determinant and then
+      1/det(M) = (n!)^2 / prod phi(k) for the lcm matrix. The 2-adic argument for n >= 39 is
+      not from the literature.
+    license: "unknown"
+    author_endorsement: "n/a"
+  - title: "OEIS Open: How many conjectures can language models turn into theorems?"
+    authors:
+      - "Tomasz Adamczewski"
+    type: "article"
+    location: "https://arxiv.org/abs/2608.11941"
+    relationship: "background"
+    note: >-
+      The benchmark from which formal-conjectures took this OEIS conjecture. Cited there as a
+      reference; no proof is taken from it.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/feacabbcf6ed2e7b622663c3e1c0f61038183392/FormalConjectures/OEIS/60841.lean"
+    relationship: "builds-on"
+    note: >-
+      The definitions lcmMatrix and integerDetN and the statement conjecture1 are copied
+      verbatim from formal-conjectures (Apache-2.0), where the statement is stated with sorry
+      and tagged research open.
+
+status:
+  scope: >-
+    Formalized: for every n >= 1, the denominator of 1/det(M) is 1 if and only if
+    n is in {1, ..., 34} or n is 36 or 38, for the n x n matrix M with entries
+    1/lcm(i+1, j+1) over the rationals. Not formalized: the values of the sequence A060841
+    itself (the numerators), or any statement about the denominators beyond integrality.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Fable 5.1 (Anthropic)"]
+      framework: "Claude Code"
+      tool_setup: >-
+        AI-assisted: a Claude Code agent found the proof (Smith's determinant plus the 2-adic
+        obstruction), checked it numerically with a Python script, wrote the Lean proof and the
+        metadata, using lake build and #print axioms; the author chose the target, directed the
+        work and checked the statement and the result.
+      cost:
+        wall_time: "about four hours"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "n/a"
+  spend_usd: "subscription-based"
+  notes: >-
+    The author selected the statement from formal-conjectures, and an AI agent wrote the proof
+    under the author's direction. The statement was not changed.
+
+fidelity:
+  divergences: >-
+    None. The definitions and the statement are copied verbatim from formal-conjectures; only
+    the import differs (Mathlib instead of FormalConjecturesUtil, which this project cannot
+    import) and the formal-conjectures attribute category research open is dropped.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: >-
+    The proof is checked by the Lean kernel; #print axioms gives only propext,
+    Classical.choice and Quot.sound. Before the formalisation an independent Python script
+    checked, exactly, the closed form det(M) = prod phi(k)/k^2 against the determinant for
+    n <= 14, the integrality set for n <= 400 and the 2-adic inequality for n <= 5000. A script
+    checked that the definitions and the statement in
+    Challenge.lean and Solution.lean are identical to the formal-conjectures ones. No human
+    mathematical review of the proof beyond the author's.
+
+alignment:
+  namespace: "OeisA60841"
+  statements:
+    - source: "OEIS A060841, conjecture of Robert G. Wilson v (Aug 02 2015)"
+      lean: "OeisA60841.conjecture1"
+      module: "Challenge"
+      status: "proved"
+      note: "1/det(M) is an integer if and only if n <= 34, n = 36 or n = 38."
+
+acknowledgements: >-
+  Mathlib; formal-conjectures for the statement and the definitions; the OEIS and R. G. Wilson v
+  for the conjecture; Smith's determinant identity.
