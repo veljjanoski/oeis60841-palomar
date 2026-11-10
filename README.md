@@ -6,7 +6,7 @@ A Lean 4 proof of the conjecture in [OEIS A060841](https://oeis.org/A060841), pr
 [Palomar](https://palomar-registry.org/) registry (submission form:
 <https://submit.palomar-registry.org/>).
 
-Let $M$ be the $n \times n$ matrix with entries $1/\operatorname{lcm}(i,j)$. The sequence
+Let $M$ be the $n \times n$ matrix with entries $1/\mathrm{lcm}(i,j)$. The sequence
 A060841 lists the numerators of $1/\det(M)$, and R. G. Wilson v conjectured in 2015 that
 $1/\det(M)$ is an integer only for $n = 1, \ldots, 34$, $36$ and $38$.
 
@@ -18,9 +18,9 @@ verbatim from [formal-conjectures](https://github.com/google-deepmind/formal-con
 (`FormalConjectures/OEIS/60841.lean` at commit `feacabbcf6ed2e7b622663c3e1c0f61038183392`),
 where the statement is stated with `sorry`.
 
-The proof in `Solution.lean`: since $1/\operatorname{lcm}(i,j) = \gcd(i,j)/(ij)$ and
+The proof in `Solution.lean`: since $1/\mathrm{lcm}(i,j) = \gcd(i,j)/(ij)$ and
 $\sum_{d \mid m} \varphi(d) = m$, the gcd matrix factors as
-$E \cdot \operatorname{diag}(\varphi) \cdot E^{\mathsf T}$ with $E$ the unitriangular
+$E \cdot \mathrm{diag}(\varphi) \cdot E^{\mathsf T}$ with $E$ the unitriangular
 divisibility matrix $E_{id} = [d \mid i]$ (Smith's determinant), so
 $1/\det(M) = (n!)^2 / \prod_{k \leq n} \varphi(k)$. For $n \in \{1, \ldots, 34, 36, 38\}$ the
 divisibility is decided by computation (`decide`). For every other $n$ the obstruction is
